@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Graphic Design Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  :root{
+    --bg:#0d0d0d;
+    --panel:#111;
+    --white:#fff;
+    --muted:#b8b8b8;
+    --accent:#f5b301;
+    --script:'Dancing Script',cursive;
+    --display:'Anton',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:var(--body);
+    line-height:1.45;
+    padding:12px;
+    -webkit-text-size-adjust:100%;
+  }
+  .portfolio{
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid #1e1e1e;
+    border-radius:14px;
+    padding:44px 20px 26px;
+    position:relative;
+    overflow:hidden;
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .panel::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 80% 10%, rgba(255,255,255,.04), transparent 60%);
+    pointer-events:none;
+  }
+  .panel-tag{
+    position:absolute; top:14px; left:16px;
+    font-size:.6rem; letter-spacing:.14em;
+    text-transform:uppercase; color:#8a8a8a;
+  }
+  .panel-tag.right{left:auto; right:16px;}
+
+  /* big display headings */
+  .display{
+    font-family:var(--display);
+    font-size:clamp(2rem,9vw,4.2rem);
+    line-height:1;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+    position:relative;
+    z-index:1;
+    word-wrap:break-word;
+  }
+  .script{
+    font-family:var(--script);
+    color:var(--accent);
+    font-size:clamp(1.2rem,5vw,2.6rem);
+    font-weight:700;
+    display:block;
+    margin-top:-.15em;
+    line-height:1.1;
+  }
+
+  /* flex row for "Graphic Design" + SVG */
+  .script-row{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    margin-top: -.15em;
+  }
+  .script-row .script{
+    margin-top: 0;
+    display: inline-block;
+  }
+  .script-svg{
+    width: clamp(40px, 8vw, 80px);
+    height: auto;
+    display: block;
+    pointer-events: none;
+    opacity: .95;
+    transform: translateY(-2px);
+    flex-shrink: 0;
+  }
+
+  /* HERO panel */
+  .hero .display{font-size:clamp(2.4rem,12vw,5rem)}
+  .hero p{
+    color:var(--muted);
+    font-size:.82rem;
+    max-width:100%;
+    margin-top:22px;
+    position:relative;
+    z-index:1;
+  }
+  .portrait{
+    position:relative;
+    margin-top:24px;
+    width:100%;
+    height:180px;
+    background:#1c1c1c;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    color:#555; font-size:.72rem;
+    overflow: hidden;
+  }
+  /* media inside portrait */
+  .portrait img,
+  .portrait video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: inherit;
+    display: block;
+  }
+
+  /* profile / hello panel */
+  .hello .display{font-size:clamp(1.8rem,8vw,3.2rem)}
+  .hello .script{font-size:clamp(2rem,10vw,3rem); margin-top:-.5em; margin-left:0}
+  .hello p{color:var(--muted); font-size:.82rem; max-width:100%; margin-top:20px; position:relative; z-index:1}
+  .hello .avatar{
+    position:relative;
+    margin-top:24px;
+    width:100%;
+    height:200px;
+    background:#1c1c1c;
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    color:#666; font-size:.72rem;
+    overflow: hidden;
+  }
+  .hello .avatar img,
+  .hello .avatar video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: inherit;
+    display: block;
+  }
+
+  /* generic section title */
+  .section-title{position:relative; z-index:1}
+  .section-title .script{margin-left:0; margin-top:-.3em; font-size:clamp(1.1rem,5vw,2rem)}
+
+  /* thumbnails inside panels */
+  .thumb-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:22px;
+    position:relative; z-index:1;
+  }
+  .thumb{
+    background:#1b1b1b;
+    border-radius:8px;
+    aspect-ratio:1/1.1;
+    display:flex; align-items:center; justify-content:center;
+    color:#555; font-size:.62rem; text-align:center;
+    padding:6px;
+    overflow: hidden;
+  }
+
+  /* social / print / brand grid */
+  .big-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:22px;
+    position:relative; z-index:1;
+  }
+  .big-grid .card{
+    background:#1b1b1b;
+    border-radius:10px;
+    aspect-ratio:1/1.15;
+    display:flex; align-items:center; justify-content:center;
+    color:#5c5c5c; font-size:.68rem; text-align:center;
+    padding:0;                /* changed: no padding so media fills */
+    overflow: hidden;         /* changed: keeps media inside rounded corners */
+    position: relative;
+  }
+  .big-grid .card.wide{aspect-ratio:2/0.9; grid-column:span 2}
+
+  /* ===== MEDIA inside cards (images / GIFs / videos) ===== */
+  .big-grid .card img,
+  .big-grid .card video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: inherit;
+    display: block;
+    transition: transform .4s ease;
+  }
+  /* gentle hover zoom */
+  .big-grid .card:hover img,
+  .big-grid .card:hover video{
+    transform: scale(1.06);
+  }
+
+  /* skills panel */
+  .skills-panel{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:22px;
+    align-items:center;
+    background:#101010;
+  }
+  .skills-panel .paper{
+    background:#e9e6e0;
+    color:#111;
+    border-radius:12px;
+    padding:24px 20px;
+    position:relative;
+    box-shadow:0 20px 40px -18px rgba(0,0,0,.6);
+    transform:rotate(-1deg);
+  }
+  .skills-panel .paper::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px);
+    background-size:6px 6px;
+    border-radius:12px;
+    pointer-events:none;
+  }
+  .skills-panel h3{
+    font-family:var(--display);
+    font-size:1.15rem;
+    letter-spacing:.03em;
+    margin-bottom:14px;
+    text-transform:uppercase;
+  }
+  .skills-panel ul{list-style:none}
+  .skills-panel li{
+    font-size:.82rem;
+    padding:5px 0 5px 16px;
+    position:relative;
+    color:#222;
+  }
+  .skills-panel li::before{
+    content:"•";
+    position:absolute; left:0; color:#000;
+    font-weight:700;
+  }
+  .softwares{
+    display:flex; gap:14px; margin-top:8px; flex-wrap:wrap;
+  }
+  .soft{
+    width:52px; height:52px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:1rem;
+    font-family:var(--body);
+  }
+  .soft.ps{background:#001e36; border:1px solid #31a8ff; color:#31a8ff}
+  .soft.ai{background:#2a0d00; border:1px solid #ff9a00; color:#ff9a00}
+  .soft.pr{background:#1d0030; border:1px solid #ea77ff; color:#ea77ff}
+
+  /* thank you panel */
+  .thanks{
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    padding:52px 20px;
+  }
+  .thanks .display{font-size:clamp(2.2rem,12vw,5rem)}
+  .thanks .script{
+    font-size:clamp(1.2rem,5vw,2.2rem);
+    margin-top:-.4em;
+    margin-bottom:.4em;
+    display:block;
+  }
+  .contact-btn{
+    display:inline-block;
+    margin-top:26px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    font-weight:600;
+    letter-spacing:.12em;
+    font-size:.72rem;
+    padding:11px 30px;
+    border-radius:30px;
+    text-transform:uppercase;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .contact-btn:hover{transform:translateY(-3px); background:var(--accent)}
+
+  /* decorative squiggles */
+  .squiggle{
+    position:absolute;
+    width:44px; height:auto;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .squiggle.top-right{top:20px; right:20px; transform:rotate(15deg)}
+  .squiggle.bottom-left{bottom:20px; left:20px; transform:rotate(-10deg)}
+
+  /* top-right asset SVG */
+  .hero-asset-svg{
+    position: absolute;
+    top: 36px;
+    right: 20px;
+    width: 120px;
+    height: auto;
+    opacity: .9;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* contact strip */
+  .contact-strip{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    background:#0a0a0a;
+    border:1px solid #1a1a1a;
+    border-radius:14px;
+    padding:18px 20px;
+    font-size:.78rem;
+    color:var(--muted);
+    gap:12px;
+  }
+  .contact-strip > div{
+    display:flex;
+    align-items:center;
+    word-break:break-word;
+    max-width:100%;
+  }
+  .contact-strip a{color:var(--white); text-decoration:none; margin-left:6px}
+  .contact-strip a:hover{color:var(--accent)}
+  .contact-strip i{color:var(--accent); margin-right:6px; flex-shrink:0}
+
+  /* ========== TABLET ========== */
+  @media (min-width:640px){
+    body{padding:18px}
+    .portfolio{
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .panel{padding:48px 28px 30px}
+    .panel-tag{top:18px; left:22px; font-size:.65rem}
+    .panel-tag.right{right:22px}
+    .hero p, .hello p{font-size:.85rem}
+    .portrait{height:230px}
+    .hello .avatar{height:250px}
+    .skills-panel{grid-column:span 2}
+    .thanks{grid-column:span 2}
+    .contact-strip{
+      grid-column:span 2;
+      flex-direction:row;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 32px;
+      font-size:.8rem;
+    }
+    .big-grid{gap:12px}
+    .big-grid .card{font-size:.75rem}
+  }
+
+  /* ========== DESKTOP ========== */
+  @media (min-width:1024px){
+    .panel{min-height:340px; padding:52px 34px 34px}
+    .portrait{
+      position:absolute; right:30px; bottom:0;
+      width:210px; height:250px;
+      margin-top:0;
+      border-radius:12px 12px 0 0;
+    }
+    .hero{padding-right:260px}
+    .hello{padding-right:230px}
+    .hello .avatar{
+      position:absolute; right:34px; bottom:0;
+      width:180px; height:230px;
+      margin-top:0;
+      border-radius:14px 14px 0 0;
+    }
+    .thumb-grid{grid-template-columns:repeat(3,1fr); gap:12px}
+    .skills-panel{
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      padding:52px 46px;
+    }
+    .skills-panel .paper{padding:34px 30px}
+    .skills-panel h3{font-size:1.4rem}
+    .soft{width:56px; height:56px; font-size:1.1rem}
+    .squiggle{width:60px}
+    .section-title .script{margin-left:.4em; margin-top:-.5em}
+    .thanks{padding:70px 40px}
+
+    .hero-asset-svg{
+      top: 48px;
+      right: 34px;
+      width: 90px;
+    }
+    .script-svg{
+      width: clamp(70px, 10vw, 110px);
+    }
+  }
+
+  /* ========== VERY SMALL PHONES ========== */
+  @media (max-width:360px){
+    .panel{padding:40px 16px 22px; border-radius:12px}
+    .panel-tag{font-size:.55rem; left:14px}
+    .panel-tag.right{right:14px}
+    .contact-strip{padding:16px}
+    .contact-strip{font-size:.72rem}
+    .soft{width:44px; height:44px; font-size:.9rem}
+    .hero-asset-svg{width:56px; top:32px; right:14px;}
+    .script-svg{width:50px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="portfolio">
+
+  <!-- PANEL 1 : HERO -->
+  <section class="panel hero">
+    <span class="panel-tag">FLEXX NGIRE </span>
+    <span class="panel-tag right">Portfolio</span>
+
+    <h1 class="display">
+      Portfolio<br>
+      <span class="script-row">
+        <span class="script">Graphic Design</span>
+        <img src="assets/cartoon head-01.svg" alt="" class="script-svg" aria-hidden="true" />
+      </span>
+    </h1>
+
+    <p>Graphic designer based in KENYA— crafting bold visual identities, social media creatives, print media &amp; illustrations.</p>
+
+    <!-- 👇 swap in your real photo -->
+    <div class="portrait">
+      <img src="assets/profile.gif" alt="Flexx Ngire portrait" />
+    </div>
+
+    <!-- ORIGINAL spiral squiggle -->
+    <svg class="squiggle top-right" viewBox="0 0 100 60" fill="none" stroke="#f5b301" stroke-width="3">
+      <path d="M5 40 Q 25 5, 50 35 T 95 25" stroke-linecap="round"/>
+    </svg>
+
+    <!-- ORIGINAL top-right asset SVG -->
+    <img src="assets/cartoon head-01.svg" alt="" class="hero-asset-svg" aria-hidden="true" />
+  </section>
+
+  <!-- PANEL 2 : SOCIAL MEDIA -->
+  <section class="panel">
+    <span class="panel-tag">Social Media</span>
+    <span class="panel-tag right">Portfolio</span>
+    <h2 class="display section-title">Social Media<br><span class="script">Designs</span></h2>
+    <div class="big-grid">
+      <div class="card"><img src="assets/profile.gif" alt="Post 01" loading="lazy" /></div>
+      <div class="card"><img src="assets/social media.gif" alt="Post 02" loading="lazy" /></div>
+      <div class="card"><img src="assets/social media 2.gif" alt="Post 03" loading="lazy" /></div>
+      <div class="card"><img src="assets/social media.gif" alt="Post 04" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- PANEL 3 : HELLO -->
+  <section class="panel hello">
+    <span class="panel-tag">FLEXX NGIRE </span>
+    <span class="panel-tag right">Portfolio</span>
+    <h2 class="display">Hello I'am<br><span class="script">Flexx</span></h2>
+    <p>My name is FLEXX NGIRE. This presentation is an introduction to my journey as a graphic designer — showing projects that reflect my skills, creativity, and passion for visual storytelling.</p>
+
+    <!-- 👇 swap in your portrait cut-out -->
+    <div class="avatar">
+      <img src="assets/pp.jpg" alt="Flexx Ngire portrait cut-out" />
+    </div>
+  </section>
+
+  <!-- PANEL 4 : PRINT MEDIA -->
+  <section class="panel">
+    <span class="panel-tag">Print Media</span>
+    <span class="panel-tag right">Portfolio</span>
+    <h2 class="display section-title">Print Media<br><span class="script">Designs</span></h2>
+    <div class="big-grid">
+      <div class="card wide"><img src="assets/print.gif" alt="Banner / poster" loading="lazy" /></div>
+      <div class="card"><img src="assets/flyer.gif" alt="Flyer" loading="lazy" /></div>
+      <div class="card"><img src="assets/B card.gif" alt="Business card" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- PANEL 5 : SKILLS & TOOLS -->
+  <section class="panel skills-panel">
+    <span class="panel-tag">Skills &amp; Tools</span>
+    <span class="panel-tag right">Portfolio</span>
+    <div class="paper">
+      <h3>Designing Skills</h3>
+      <ul>
+        <li>Branding</li>
+        <li>Social Media Posts</li>
+        <li>Print Media Designs</li>
+        <li>Video Editing</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-family:var(--display); font-size:1.15rem; letter-spacing:.03em; margin-bottom:14px; text-transform:uppercase;">Softwares</h3>
+      <div class="softwares">
+        <div class="soft ps">Ps</div>
+        <div class="soft ai">Ai</div>
+        <div class="soft pr">Pr</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 6 : ILLUSTRATIONS -->
+  <section class="panel">
+    <span class="panel-tag">Illustrations</span>
+    <span class="panel-tag right">Portfolio</span>
+    <h2 class="display section-title">Illustrations<br><span class="script">Designs</span></h2>
+    <div class="big-grid">
+      <div class="card"><img src="assets/illustration.gif" alt="Character illustration" loading="lazy" /></div>
+      <div class="card"><img src="assets/illustration 2.gif" alt="Vector art" loading="lazy" /></div>
+      <div class="card wide"><img src="assets/illustration 3.gif" alt="Digital painting" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- PANEL 7 : BRANDING -->
+  <section class="panel">
+    <span class="panel-tag">Branding</span>
+    <span class="panel-tag right">Portfolio</span>
+    <h2 class="display section-title">Branding<br><span class="script">Designs</span></h2>
+    <div class="big-grid">
+      <div class="card"><img src="assets/brand.gif" alt="Logo design" loading="lazy" /></div>
+      <div class="card"><img src="assets/brand 2.gif" alt="Packaging design" loading="lazy" /></div>
+      <div class="card wide"><img src="assets/brand3.gif" alt="Brand identity" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- PANEL 8 : THANK YOU -->
+  <section class="panel thanks">
+    <span class="panel-tag">Thank You</span>
+    <span class="panel-tag right">Portfolio</span>
+    <span class="script" style="color:var(--accent); font-family:var(--script);">for attention</span>
+    <h2 class="display" style="font-size:clamp(2.2rem,12vw,6rem);">Thank You</h2>
+    <a href="#" class="contact-btn">Contact</a>
+    <svg class="squiggle bottom-left" viewBox="0 0 100 60" fill="none" stroke="#f5b301" stroke-width="3">
+      <path d="M5 30 Q 30 55, 55 25 T 95 35" stroke-linecap="round"/>
+    </svg>
+  </section>
+
+  <!-- CONTACT STRIP -->
+  <div class="contact-strip">
+    <div><i class="fas fa-phone-alt"></i> +254 70831 2617</div>
+    <div><i class="fab fa-instagram"></i> <a href="#">@1conik_ink</a></div>
+    <div><i class="far fa-envelope"></i> <a href="#">flexxngire01@gmail.com</a></div>
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    console.log("%c✨ Portfolio ready — FLEXX NGIRE", "color:#f5b301; font-size:14px; font-weight:bold;");
+
+    const contactBtn = document.querySelector('.contact-btn');
+    if (contactBtn) {
+      contactBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const strip = document.querySelector('.contact-strip');
+        if (strip) strip.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    // Only run parallax on non-touch, wider screens
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const isWide = window.innerWidth >= 768;
+    if (!isTouch && isWide) {
+      document.addEventListener('mousemove', (e) => {
+        const squiggles = document.querySelectorAll('.squiggle');
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 6;
+        squiggles.forEach(s => {
+          const rot = s.classList.contains('top-right') ? 15 : -10;
+          s.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
